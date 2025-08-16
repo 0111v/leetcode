@@ -111,6 +111,10 @@ function runFile(filename) {
             command = 'node';
             args = [filePath];
             break;
+        case '.ts':
+            command = 'npx';
+            args = ['ts-node', filePath];
+            break;
         case '.java':
             runJavaFile(filePath, basename);
             return;
@@ -120,7 +124,7 @@ function runFile(filename) {
             break;
         default:
             console.error(`Unsupported file extension: ${ext}`);
-            console.error('Supported extensions: .py, .js, .java, .csx');
+            console.error('Supported extensions: .py, .js, .ts, .java, .csx');
             process.exit(1);
     }
 

@@ -5,7 +5,15 @@
   "scripts": {
     "exec": "node runner.js"
   },
-  "keywords": ["leetcode", "runner", "multi-language"],
+  "keywords": [
+    "leetcode",
+    "runner",
+    "multi-language"
+  ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
 }
