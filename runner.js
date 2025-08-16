@@ -55,6 +55,21 @@ function findFile(filename, projectRoot) {
     return searchInDir(projectRoot);
 }
 
+function runJavaFile(filePath, basename) {
+    console.log(`Compiling ${filePath}...`);
+    const compileProcess = spawn('javac', [filePath], { stdio: 'inherit' });
+    compileProcess.on('close', (code) => {
+        if (code === 0) {
+            console.log(`Running ${basename}...`);
+            const dir = path.dirname(filePath);
+            spawn('java', ['-cp', dir, basename], { stdio: 'inherit' });
+        } else {
+            console.error('Compilation failed');
+            process.exit(1);
+        }
+    });
+}
+
 function runFile(filename) {
     if (!filename) {
         console.error('Usage: npm run exec <filename>');
@@ -88,19 +103,7 @@ function runFile(filename) {
             args = [filePath];
             break;
         case '.java':
-            // Compile first, then run
-            console.log(`Compiling ${filePath}...`);
-            const compileProcess = spawn('javac', [filePath], { stdio: 'inherit' });
-            compileProcess.on('close', (code) => {
-                if (code === 0) {
-                    console.log(`Running ${basename}...`);
-                    const dir = path.dirname(filePath);
-                    spawn('java', ['-cp', dir, basename], { stdio: 'inherit' });
-                } else {
-                    console.error('Compilation failed');
-                    process.exit(1);
-                }
-            });
+            runJavaFile(filePath, basename);
             return;
         case '.csx':
             command = 'dotnet';
