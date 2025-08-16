@@ -1,6 +1,7 @@
 const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs');
+const os = require('os');
 
 function findProjectRoot(startDir = process.cwd()) {
     let currentDir = startDir;
@@ -56,15 +57,23 @@ function findFile(filename, projectRoot) {
 }
 
 function runJavaFile(filePath, basename) {
+    // Create temp directory
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'leetcode-java-'));
+    
     console.log(`Compiling ${filePath}...`);
-    const compileProcess = spawn('javac', [filePath], { stdio: 'inherit' });
+    const compileProcess = spawn('javac', ['-d', tempDir, filePath], { stdio: 'inherit' });
     compileProcess.on('close', (code) => {
         if (code === 0) {
             console.log(`Running ${basename}...`);
-            const dir = path.dirname(filePath);
-            spawn('java', ['-cp', dir, basename], { stdio: 'inherit' });
+            const javaProcess = spawn('java', ['-cp', tempDir, basename], { stdio: 'inherit' });
+            
+            // Clean up temp directory when done
+            javaProcess.on('close', () => {
+                fs.rmSync(tempDir, { recursive: true, force: true });
+            });
         } else {
             console.error('Compilation failed');
+            fs.rmSync(tempDir, { recursive: true, force: true });
             process.exit(1);
         }
     });
