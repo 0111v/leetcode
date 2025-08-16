@@ -1,0 +1,11 @@
+{
+  "name": "leetcode-runner",
+  "version": "1.0.0",
+  "description": "Universal runner for leetcode solutions in multiple languages",
+  "scripts": {
+    "exec": "node runner.js"
+  },
+  "keywords": ["leetcode", "runner", "multi-language"],
+  "author": "",
+  "license": "MIT"
+}
