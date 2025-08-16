@@ -8,7 +8,7 @@ target = 9
 # nums = [3, 3]
 # target = 6
 
-def two_sun(nums, target):
+def two_sum(nums, target):
     map = {}
 
     for i in range(len(nums)):
@@ -22,7 +22,7 @@ def two_sun(nums, target):
         map[nums[i]] = i
         print(f'set to map number {nums[i]} index {i}')
 
-print(two_sun(nums, target))
+print(two_sum(nums, target))
 
 
 

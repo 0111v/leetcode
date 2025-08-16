@@ -4,7 +4,7 @@ using System.Diagnostics.Metrics;
 public int[] nums = [2, 7, 11, 15];
 public int target = 9;
 
-public static int[] TwoSum(int[] nums, int target)
+public int[] TwoSum(int[] nums, int target)
 {
     var map = new Dictionary<int, int>();
 
@@ -26,7 +26,7 @@ public static int[] TwoSum(int[] nums, int target)
     return [];
 }
 
-int[] result = TwoSum(nums, target);
+var result = TwoSum(nums, target);
 Console.WriteLine(string.Join(", ", result));
 
 
